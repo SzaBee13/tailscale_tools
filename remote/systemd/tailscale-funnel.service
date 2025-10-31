@@ -1,0 +1,18 @@
+[Unit]
+Description=Start Tailscale Funnel after network, tailscaled, and caddy
+After=network-online.target tailscaled.service caddy.service
+Wants=network-online.target tailscaled.service caddy.service
+
+[Service]
+Type=simple
+WorkingDirectory=/etc/custom/tailscale-funnel-start
+ExecStart=/usr/local/bin/start_funnel.sh
+RestartSec=10s
+User=root
+
+# Optional: add logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
